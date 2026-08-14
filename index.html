@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[İŞLETME ADI] — Web Sitesi</title>
+    <meta name="description" content="[İŞLETME ADI] — [BÖLGE]'de lazer epilasyon, cilt bakımı, kalıcı makyaj, microblading ve daha fazlası. Uzman ekip, hijyenik ortam, doğal sonuçlar." />
+    <link rel="icon" href="assets/favicon.ico" />
+    <style>
+        :root{
+            --bg:#fff6fa;            /* şeker beyazı, hafif pembe */
+            --bg-soft:#e9f9f8;       /* ferah cam göbeği tonu (alternatif bölümler) */
+            --panel:#ffffff;
+            --cream:#fff8f4;
+            --text:#2c2333;          /* koyu mürekkep — okunaklı */
+            --muted:#7c7086;
+            --gold:#c9922f;          /* aydınlık zeminde okunaklı altın */
+            --gold-2:#a9781f;
+            --pink:#ff5c9d;
+            --purple:#a855f7;
+            --orange:#ff8a4c;
+            --aqua:#1fbdb6;          /* cam göbeği mavisi / turkuaz ferahlık */
+            --line:rgba(70,45,85,.12);
+            --grad:linear-gradient(120deg,var(--orange),var(--pink) 40%,var(--purple) 80%);
+            --grad-text:linear-gradient(120deg,#ff7a2e,#ff3d86 45%,#9b47f0);
+            --radius:18px;
+            --shadow:0 22px 50px -24px rgba(120,60,120,.32);
+            --font-body:"Segoe UI",Roboto,-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+            --font-display:Georgia,"Times New Roman",serif;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{
+            font-family:var(--font-body);
+            background:var(--bg);
+            color:var(--text);
+            line-height:1.6;
+            overflow-x:hidden;
+        }
+        a{color:inherit;text-decoration:none}
+        img{max-width:100%;display:block}
+        .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+        .serif{font-family:var(--font-display)}
+        .grad-text{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+        .eyebrow{
+            text-transform:uppercase;letter-spacing:.32em;font-size:.72rem;
+            color:var(--gold);font-weight:600;
+        }
+        .btn{
+            display:inline-flex;align-items:center;gap:.55rem;
+            padding:.85rem 1.55rem;border-radius:999px;font-weight:600;
+            font-size:.98rem;cursor:pointer;border:0;transition:.25s transform,.25s box-shadow,.25s opacity;
+        }
+        .btn:hover{transform:translateY(-2px)}
+        .btn-primary{background:var(--grad);color:#fff;box-shadow:0 12px 30px -10px rgba(255,106,162,.6)}
+        .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+        .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+        .btn-gold{background:linear-gradient(120deg,var(--gold),var(--gold-2));color:#241a06}
+
+        /* ---------- Top bar ---------- */
+        .topbar{
+            background:linear-gradient(120deg,#ffedf5,#e6f7f7);
+            border-bottom:1px solid var(--line);
+            font-size:.82rem;color:var(--muted);
+        }
+        .topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;height:40px;flex-wrap:wrap}
+        .topbar a:hover{color:var(--pink)}
+        .topbar .sep{opacity:.4;margin:0 .3rem}
+
+        /* ---------- Nav ---------- */
+        header.nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+        header.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+        .brand{display:flex;align-items:center;gap:.7rem}
+        .crown{width:34px;height:34px;flex:none}
+        .brand-logo{width:42px;height:42px;border-radius:11px;object-fit:cover;flex:none;box-shadow:0 4px 12px -4px rgba(120,60,120,.35)}
+        .brand-name{font-family:var(--font-display);font-size:1.28rem;font-weight:700;letter-spacing:.02em}
+        .brand-name small{display:block;font-size:.6rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);font-family:var(--font-body);margin-top:-2px}
+        nav.links{display:flex;align-items:center;gap:1.7rem}
+        nav.links a{font-size:.94rem;color:var(--muted);font-weight:500}
+        nav.links a:hover{color:var(--text)}
+        .nav-cta{display:flex;align-items:center;gap:.8rem}
+        .burger{display:none;background:none;border:0;color:var(--text);cursor:pointer}
+        .burger svg{width:28px;height:28px}
+
+        /* ---------- Hero ---------- */
+        .hero{position:relative;padding:96px 0 110px;text-align:center;overflow:hidden;background:var(--bg)}
+        #hero-wave{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;pointer-events:none}
+        .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.2;z-index:1;pointer-events:none}
+        .hero::before{width:520px;height:520px;background:radial-gradient(circle,var(--pink),transparent 65%);top:-160px;left:-120px}
+        .hero::after{width:560px;height:560px;background:radial-gradient(circle,var(--purple),transparent 65%);bottom:-220px;right:-140px}
+        .hero .glow-gold{position:absolute;width:420px;height:420px;border-radius:50%;filter:blur(100px);opacity:.14;background:radial-gradient(circle,var(--gold),transparent 65%);top:20%;left:50%;transform:translateX(-50%);z-index:1;pointer-events:none}
+        .hero .wrap{position:relative;z-index:2}
+        .hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.08;margin:1.1rem 0 .4rem}
+        .hero .lead{max-width:640px;margin:1.1rem auto 0;color:var(--muted);font-size:1.08rem}
+        .hero .cta-row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;margin-top:2.1rem}
+        .hero-tags{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:2.4rem}
+        .chip{border:1px solid var(--line);border-radius:999px;padding:.4rem 1rem;font-size:.82rem;color:var(--muted)}
+        .chip b{color:var(--gold);font-weight:600}
+
+        /* ---------- Stats strip ---------- */
+        .stats{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+        .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:40px 22px;text-align:center}
+        .stat .num{font-family:var(--font-display);font-size:2rem;font-weight:700}
+        .stat .lbl{font-size:.82rem;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;margin-top:.2rem}
+
+        /* ---------- Section base ---------- */
+        section{padding:88px 0}
+        .sec-head{text-align:center;max-width:640px;margin:0 auto 54px}
+        .sec-head h2{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;margin:.6rem 0 .5rem}
+        .sec-head p{color:var(--muted)}
+
+        /* ---------- Services ---------- */
+        .grid-services{display:grid;grid-template-columns:repeat(3,1fr);gap:30px 24px;align-items:stretch}
+        /* ---------- 3D tilt hizmet kartları (Card Lab efekti, salon temasına uyarlandı) ---------- */
+        .ux-parent{position:relative;z-index:1;width:100%;max-width:400px;height:300px;margin-inline:auto;perspective:1000px;perspective-origin:50% 50%;filter:drop-shadow(0 22px 40px rgba(150,90,150,.22))}
+        .ux-parent:hover{z-index:6}
+        .ux-card{position:relative;height:100%;border-radius:40px;background:var(--ux-grad);transform-style:preserve-3d;transition:transform .55s cubic-bezier(.22,1,.36,1),box-shadow .55s ease;box-shadow:rgba(150,90,150,.18) 0 25px 25px -5px}
+        .ux-parent:hover .ux-card{transform:rotate3d(1,1,0,26deg);box-shadow:rgba(150,90,150,.26) 28px 44px 28px -34px,rgba(255,92,157,.20) 0 0 56px -10px}
+        .ux-glass{position:absolute;inset:8px;border-radius:44px;border-top-right-radius:100%;background:linear-gradient(0deg,rgba(255,255,255,.42) 0%,rgba(255,255,255,.86) 100%);transform:translate3d(0,0,25px);transform-style:preserve-3d;border-left:1px solid rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.75);transition:all .5s ease-in-out;pointer-events:none}
+        .ux-logo{position:absolute;right:0;top:0;transform-style:preserve-3d;pointer-events:none;z-index:2}
+        .ux-circle{display:block;position:absolute;aspect-ratio:1;border-radius:50%;top:0;right:0;background:var(--ux-orbit);box-shadow:rgba(100,100,111,.2) -10px 10px 24px 0;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:all .5s ease-in-out}
+        .ux-circle:nth-child(1){width:150px;transform:translate3d(0,0,20px);top:8px;right:8px}
+        .ux-circle:nth-child(2){width:122px;transform:translate3d(0,0,40px);top:10px;right:10px;transition-delay:.05s}
+        .ux-circle:nth-child(3){width:96px;transform:translate3d(0,0,60px);top:16px;right:16px;transition-delay:.1s}
+        .ux-circle:nth-child(4){width:72px;transform:translate3d(0,0,80px);top:22px;right:22px;transition-delay:.15s}
+        .ux-circle:nth-child(5){width:52px;transform:translate3d(0,0,100px);top:28px;right:28px;display:grid;place-content:center;background:var(--ux-fill);transition-delay:.2s}
+        .ux-logo svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+        .ux-parent:hover .ux-circle:nth-child(2){transform:translate3d(0,0,60px)}
+        .ux-parent:hover .ux-circle:nth-child(3){transform:translate3d(0,0,80px)}
+        .ux-parent:hover .ux-circle:nth-child(4){transform:translate3d(0,0,100px)}
+        .ux-parent:hover .ux-circle:nth-child(5){transform:translate3d(0,0,120px)}
+        .ux-content{padding:104px 3.5rem 0 1.85rem;transform:translate3d(0,0,26px);position:relative;z-index:3}
+        .ux-title{display:block;color:var(--ux-title);font-family:var(--font-display);font-weight:800;font-size:1.28rem;letter-spacing:-.01em;line-height:1.15}
+        .ux-text{display:block;margin-top:.85rem;color:var(--ux-body);font-size:.92rem;line-height:1.5;font-weight:600}
+        .ux-t1{--ux-grad:linear-gradient(135deg,#ff9ec0 0%,#ff6aa2 100%);--ux-title:#7a1f45;--ux-body:rgba(122,31,69,.82);--ux-orbit:rgba(255,158,192,.28);--ux-fill:#c23c72}
+        .ux-t2{--ux-grad:linear-gradient(145deg,#c9a0ff 0%,#a855f7 100%);--ux-title:#42196f;--ux-body:rgba(66,25,111,.82);--ux-orbit:rgba(201,160,255,.3);--ux-fill:#6d28d9}
+        .ux-t3{--ux-grad:linear-gradient(135deg,#ffd79a 0%,#ff9d5c 100%);--ux-title:#7c3d12;--ux-body:rgba(124,61,18,.85);--ux-orbit:rgba(255,215,154,.35);--ux-fill:#c2410c}
+        .ux-t4{--ux-grad:linear-gradient(140deg,#ff9ec0 0%,#b98cff 100%);--ux-title:#5b2350;--ux-body:rgba(91,35,80,.82);--ux-orbit:rgba(255,200,225,.3);--ux-fill:#9d3b8f}
+        .ux-t5{--ux-grad:linear-gradient(135deg,#f6d488 0%,#e2ad46 100%);--ux-title:#6b4a12;--ux-body:rgba(107,74,18,.86);--ux-orbit:rgba(246,212,136,.35);--ux-fill:#a9801f}
+        @media (prefers-reduced-motion:reduce){
+            .ux-card,.ux-circle{transition:none!important}
+            .ux-parent:hover .ux-card{transform:none}
+            .ux-parent:hover .ux-circle:nth-child(2),.ux-parent:hover .ux-circle:nth-child(3),.ux-parent:hover .ux-circle:nth-child(4),.ux-parent:hover .ux-circle:nth-child(5){transform:inherit}
+        }
+        .card{
+            background:linear-gradient(160deg,#ffffff,#fff2f7);
+            border:1px solid rgba(232,195,122,.14);border-radius:var(--radius);
+            padding:30px 26px;transition:.28s transform,.28s border-color,.28s box-shadow;
+        }
+        .card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:var(--shadow)}
+        .ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;margin-bottom:16px;background:linear-gradient(135deg,rgba(255,106,162,.18),rgba(168,85,247,.18));border:1px solid var(--line)}
+        .ic svg{width:26px;height:26px;stroke:var(--gold)}
+        .card h3{font-family:var(--font-display);font-size:1.25rem;margin-bottom:.4rem}
+        .card p{color:var(--muted);font-size:.94rem}
+
+        /* ---------- About ---------- */
+        .about-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:54px;align-items:center}
+        .about-media{position:relative;border-radius:24px;overflow:hidden;min-height:420px;background:
+            linear-gradient(160deg,rgba(255,106,162,.25),rgba(168,85,247,.25)),
+            radial-gradient(circle at 30% 20%,rgba(232,195,122,.35),transparent 55%),
+            var(--panel);
+            border:1px solid var(--line);display:grid;place-items:center;text-align:center;padding:24px}
+        .about-media .ph{color:var(--muted);font-size:.9rem;max-width:260px}
+        .about-media .crown{width:70px;height:70px;margin:0 auto 14px}
+        .about-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+        .about h2{font-family:var(--font-display);font-size:clamp(1.8rem,3.6vw,2.6rem);margin:.6rem 0 1rem}
+        .about p{color:var(--muted);margin-bottom:1rem}
+        .about ul{list-style:none;display:grid;gap:.7rem;margin:1.3rem 0 1.8rem}
+        .about li{display:flex;gap:.7rem;align-items:flex-start;color:var(--text);font-size:.98rem}
+        .about li svg{width:22px;height:22px;stroke:var(--gold);flex:none;margin-top:2px}
+
+        /* ---------- Gallery ---------- */
+        .gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:14px}
+        .gitem{border-radius:14px;border:1px solid var(--line);background:linear-gradient(160deg,#fdeef4,#f0e7fb);display:grid;place-items:center;color:var(--muted);font-size:.8rem;position:relative;overflow:hidden}
+        .gitem::after{content:"";position:absolute;inset:0;background:var(--grad);opacity:.10}
+        .gitem.tall{grid-row:span 2}
+        .gitem span{position:relative;z-index:1;letter-spacing:.05em}
+        .gitem img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+
+        /* ---------- Yukarı akan foto bandı (Çalışmalarımızdan Kareler) ---------- */
+        .flow-wrap{position:relative;height:clamp(420px,58vh,560px);perspective:1200px;overflow:hidden;margin-bottom:6px;
+            -webkit-mask:linear-gradient(180deg,transparent,#000 13%,#000 87%,transparent);mask:linear-gradient(180deg,transparent,#000 13%,#000 87%,transparent)}
+        .flow-img{position:absolute;top:0;left:0;width:clamp(168px,21vw,274px);display:block;border-radius:14px;
+            box-shadow:0 18px 40px -14px rgba(120,60,120,.45);will-change:transform;transform:translateY(600px);
+            animation:floatUp1 26s linear infinite;pointer-events:none}
+        @keyframes floatUp1{from{transform:translateY(600px) translateZ(0)}to{transform:translateY(-320px) translateZ(0)}}
+        @keyframes floatUp2{from{transform:translateY(600px) translateZ(-90px)}to{transform:translateY(-320px) translateZ(-90px)}}
+        @keyframes floatUp3{from{transform:translateY(600px) translateZ(-180px)}to{transform:translateY(-320px) translateZ(-180px)}}
+        .flow-img:nth-child(1){left:2%;animation-name:floatUp1;animation-duration:28s;animation-delay:0s}
+        .flow-img:nth-child(2){left:26%;animation-name:floatUp2;animation-duration:32s;animation-delay:-13s}
+        .flow-img:nth-child(3){left:52%;animation-name:floatUp3;animation-duration:36s;animation-delay:-22s}
+        .flow-img:nth-child(4){left:76%;animation-name:floatUp1;animation-duration:26s;animation-delay:-9s}
+        .flow-img:nth-child(5){left:12%;animation-name:floatUp3;animation-duration:34s;animation-delay:-27s}
+        .flow-img:nth-child(6){left:40%;animation-name:floatUp2;animation-duration:30s;animation-delay:-6s}
+        .flow-img:nth-child(7){left:64%;animation-name:floatUp1;animation-duration:29s;animation-delay:-19s}
+        .flow-img:nth-child(8){left:84%;animation-name:floatUp2;animation-duration:33s;animation-delay:-4s}
+        .flow-img:nth-child(9){left:20%;animation-name:floatUp1;animation-duration:27s;animation-delay:-23s}
+        .flow-img:nth-child(10){left:48%;animation-name:floatUp3;animation-duration:35s;animation-delay:-16s}
+        .flow-img:nth-child(11){left:70%;animation-name:floatUp2;animation-duration:31s;animation-delay:-11s}
+        .flow-img:nth-child(12){left:6%;animation-name:floatUp2;animation-duration:33s;animation-delay:-30s}
+        .flow-img:nth-child(13){left:34%;animation-name:floatUp1;animation-duration:25s;animation-delay:-2s}
+        .flow-img:nth-child(14){left:58%;animation-name:floatUp2;animation-duration:30s;animation-delay:-25s}
+        @media (prefers-reduced-motion:reduce){
+            .flow-wrap{height:auto;overflow:visible;-webkit-mask:none;mask:none;display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+            .flow-img{position:relative;left:auto!important;top:auto;transform:none;animation:none;width:150px}
+        }
+        @media (max-width:640px){.flow-wrap{height:480px}.flow-img{width:48vw}}
+
+        /* ---------- Testimonials ---------- */
+        .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+        .quote{background:linear-gradient(160deg,#ffffff,#fff2f7);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+        .stars{color:var(--gold);letter-spacing:.15em;margin-bottom:.7rem}
+        .quote p{color:var(--text);font-style:italic;margin-bottom:1rem}
+        .quote .who{color:var(--muted);font-size:.88rem;font-weight:600}
+        /* ---------- Kayan yorum şeridi (auto-scroll + sürükleme) ---------- */
+        .quotes-marquee{overflow:hidden;cursor:grab;user-select:none;touch-action:pan-y;
+            -webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+        .quotes-marquee.grabbing{cursor:grabbing}
+        .quotes-track{display:flex;gap:22px;width:max-content;will-change:transform;align-items:stretch}
+        .quotes-track .quote{flex:0 0 340px;width:340px;display:flex;flex-direction:column}
+        .quotes-track .quote p{flex:1 0 auto}
+        @media (max-width:640px){.quotes-track .quote{flex-basis:80vw;width:80vw}}
+
+        /* ---------- Contact ---------- */
+        .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:stretch}
+        .info-card{background:linear-gradient(160deg,#ffffff,#fff2f7);border:1px solid var(--line);border-radius:var(--radius);padding:34px}
+        .info-row{display:flex;gap:1rem;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--line)}
+        .info-row:last-child{border-bottom:0}
+        .info-row .ic{margin:0;width:44px;height:44px}
+        .info-row .ic svg{width:22px;height:22px}
+        .info-row b{display:block;font-family:var(--font-display);font-size:1.05rem}
+        .info-row span{color:var(--muted);font-size:.92rem}
+        .map-card{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);min-height:360px;background:var(--panel)}
+        .map-card iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+        .map-open{position:absolute;left:14px;bottom:14px;z-index:2;display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.1rem;border-radius:999px;font-weight:700;font-size:.9rem;color:#fff;background:var(--grad);box-shadow:0 10px 24px -10px rgba(255,61,134,.6);text-decoration:none;transition:.2s transform}
+        .map-open:hover{transform:translateY(-1px)}
+
+        /* ---------- CTA band ---------- */
+        .cta-band{background:var(--grad);border-radius:26px;padding:56px 34px;text-align:center;position:relative;overflow:hidden}
+        .cta-band h2{font-family:var(--font-display);color:#fff;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:.6rem}
+        .cta-band p{color:rgba(255,255,255,.9);margin-bottom:1.6rem}
+
+        /* ---------- Footer ---------- */
+        footer{background:linear-gradient(160deg,#fdeef5,#e7f7f8);border-top:1px solid var(--line);padding:52px 0 30px;color:var(--muted)}
+        .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:34px;margin-bottom:34px}
+        footer h4{color:var(--text);font-family:var(--font-display);margin-bottom:1rem;font-size:1.1rem}
+        footer a{display:block;color:var(--muted);padding:.25rem 0}
+        footer a:hover{color:var(--gold)}
+        .foot-bottom{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.85rem}
+
+        /* ---------- Floating WhatsApp ---------- */
+        .fab{position:fixed;right:22px;bottom:22px;z-index:60;width:60px;height:60px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 14px 30px -8px rgba(37,211,102,.7);transition:.25s transform}
+        .fab:hover{transform:scale(1.08)}
+        .fab svg{width:32px;height:32px;fill:#fff}
+
+        /* ---------- Responsive ---------- */
+        @media(max-width:900px){
+            .grid-services,.quotes{grid-template-columns:repeat(2,1fr)}
+            .about-grid,.contact-grid{grid-template-columns:1fr}
+            .gallery{grid-template-columns:repeat(2,1fr)}
+            .foot-grid{grid-template-columns:1fr 1fr}
+            .stats .wrap{grid-template-columns:repeat(2,1fr);gap:26px}
+        }
+        @media(max-width:640px){
+            nav.links{display:none}
+            .burger{display:block}
+            .grid-services,.quotes{grid-template-columns:1fr}
+            .nav-cta .btn-text{display:none}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="wrap">
+            <span>📍 [BÖLGE], [ADRES]</span>
+            <span>
+                <a href="tel:+90XXXXXXXXXX">[TELEFON]</a>
+                <span class="sep">·</span>
+                <a href="https://instagram.com/kullanici.adi" target="_blank" rel="noopener">@kullanici.adi</a>
+            </span>
+        </div>
+    </div>
+
+    <!-- NAV -->
+    <header class="nav">
+        <div class="wrap">
+            <a class="brand" href="#top">
+                <svg class="crown" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                    <defs><linearGradient id="g1" x1="0" y1="0" x2="64" y2="64">
+                        <stop offset="0" stop-color="#f6d38a"/><stop offset="1" stop-color="#d4af37"/>
+                    </linearGradient></defs>
+                    <path d="M8 46h48l-4 8H12l-4-8Z" fill="url(#g1)"/>
+                    <path d="M6 20l12 12 14-22 14 22 12-12-6 26H12L6 20Z" fill="url(#g1)"/>
+                    <circle cx="6" cy="18" r="4" fill="url(#g1)"/><circle cx="58" cy="18" r="4" fill="url(#g1)"/>
+                    <circle cx="32" cy="8" r="4.5" fill="url(#g1)"/>
+                </svg>
+                <span class="brand-name">[İŞLETME ADI]<small>[ALT BAŞLIK]</small></span>
+            </a>
+            <nav class="links">
+                <a href="#hizmetler">Hizmetler</a>
+                <a href="#hakkimizda">Hakkımızda</a>
+                <a href="#galeri">Galeri</a>
+                <a href="#yorumlar">Yorumlar</a>
+                <a href="#iletisim">İletişim</a>
+            </nav>
+            <div class="nav-cta">
+                <a class="btn btn-primary" href="https://wa.me/90XXXXXXXXXX" target="_blank" rel="noopener">
+                    <span class="btn-text">Randevu Al</span>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6 0-1.3.6-1.9.9-2.1.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .4l-.3.5c-.1.2-.3.3-.1.6.1.3.6 1 1.3 1.6.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.6-.7c.2-.2.3-.2.6-.1l1.6.8c.3.1.4.2.5.3.1.2.1.6-.1 1Z"/></svg>
+                </a>
+                <button class="burger" aria-label="Menü"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <a id="top"></a>
+    <section class="hero" id="anasayfa">
+        <canvas id="hero-wave" aria-hidden="true"></canvas>
+        <div class="glow-gold"></div>
+        <div class="wrap">
+            <div class="eyebrow">[BÖLGE]'de Güzelliğin Adresi</div>
+            <h1>Kendinize <span class="grad-text">değer katın</span>,<br>en iyi versiyonunuzu keşfedin</h1>
+            <p class="lead">Lazer epilasyondan kalıcı makyaja, cilt bakımından microblading'e — uzman ekibimiz ve hijyenik ortamımızla doğal, kalıcı sonuçlar için buradayız.</p>
+            <div class="cta-row">
+                <a class="btn btn-primary" href="https://wa.me/90XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp'tan Randevu Al</a>
+                <a class="btn btn-ghost" href="#hizmetler">Hizmetlerimiz</a>
+            </div>
+            <div class="hero-tags">
+                <span class="chip"><b>27.600+</b> Takipçi</span>
+                <span class="chip">✦ Uzman Ekip</span>
+                <span class="chip">✦ Hijyenik Ortam</span>
+                <span class="chip">✦ Doğal Sonuçlar</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div class="wrap">
+            <div class="stat"><div class="num grad-text">27,6B</div><div class="lbl">Takipçi</div></div>
+            <div class="stat"><div class="num grad-text">9+</div><div class="lbl">Uzman Hizmet</div></div>
+            <div class="stat"><div class="num grad-text">%100</div><div class="lbl">Hijyen &amp; Sterilizasyon</div></div>
+            <div class="stat"><div class="num grad-text">5★</div><div class="lbl">Müşteri Memnuniyeti</div></div>
+        </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section id="hizmetler">
+        <div class="wrap">
+            <div class="sec-head">
+                <div class="eyebrow">Hizmetlerimiz</div>
+                <h2>Size Özel Güzellik Çözümleri</h2>
+                <p>Her hizmetimiz, alanında uzman ekibimiz tarafından en son teknoloji ve hijyen standartlarıyla uygulanır.</p>
+            </div>
+            <div class="grid-services">
+                <div class="ux-parent ux-t1">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3"/><circle cx="12" cy="12" r="3"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Lazer Epilasyon</span>
+                            <span class="ux-text">Tüm cilt tiplerine uygun, ağrısız ve kalıcı sonuç veren modern lazer teknolojisi.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ux-parent ux-t2">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3c4 4 6 6 6 9a6 6 0 0 1-12 0c0-3 2-5 6-9Z"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Cilt Bakımı</span>
+                            <span class="ux-text">Cilt analizine göre kişiye özel bakım ile canlı, pürüzsüz ve nemli bir cilt.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ux-parent ux-t3">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M4 20l9-9M13 11l3-3 4 4-3 3M15 5l4 4"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Kalıcı Makyaj</span>
+                            <span class="ux-text">Doğal görünümlü, uzun ömürlü kalıcı makyaj ile her an bakımlı hissedin.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ux-parent ux-t4">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M3 14c4-5 14-5 18 0M3 14c4 4 14 4 18 0"/><circle cx="12" cy="14" r="2.4"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Microblading</span>
+                            <span class="ux-text">Kıl tekniğiyle dolgun, simetrik ve tamamen doğal görünen kaşlar.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ux-parent ux-t5">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12c3-4 13-4 16 0M4 12c3 4 13 4 16 0"/><path d="M9 12h6"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Pudralama Kaş</span>
+                            <span class="ux-text">Yumuşak, pudra efektli dolgun kaş görünümü; makyajlı hissi kalıcı olarak.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ux-parent ux-t1">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M2 12s3-6 10-6 10 6 10 6-3 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Dipliner</span>
+                            <span class="ux-text">Kirpik diplerine uygulanan ince tanımla gözlere derinlik ve belirginlik.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ux-parent ux-t2">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M3 15c3-3 15-3 18 0M6 15l-1 3M12 15l0 3M18 15l1 3"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Kirpik Lifting</span>
+                            <span class="ux-text">Kendi kirpiklerinize kalıcı kıvrım ve dolgunluk; maskarasız etkileyici bakış.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ux-parent ux-t3">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Erkek Kaş Tasarımı</span>
+                            <span class="ux-text">Yüz hatlarına uygun, doğal ve bakımlı erkek kaş şekillendirme.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ux-parent ux-t4">
+                    <div class="ux-card">
+                        <div class="ux-logo" aria-hidden="true">
+                            <span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span><span class="ux-circle"></span>
+                            <span class="ux-circle"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3v18M5 8h14M6 13h12"/><circle cx="12" cy="3" r="1.4"/></svg></span>
+                        </div>
+                        <div class="ux-glass"></div>
+                        <div class="ux-content">
+                            <span class="ux-title">Medikal Cilt Bakımı</span>
+                            <span class="ux-text">Cilt sorunlarına yönelik ileri seviye, sonuç odaklı profesyonel uygulamalar.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="hakkimizda" style="background:var(--bg-soft)">
+        <div class="wrap about about-grid">
+            <div class="about-media">
+                <img class="about-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=" alt="[İŞLETME ADI] logosu">
+            </div>
+            <div>
+                <div class="eyebrow">Hakkımızda</div>
+                <h2>Güzelliğinize <span class="grad-text">özenle</span> dokunuyoruz</h2>
+                <p>[İŞLETME ADI] olarak [BÖLGE]'de, kendinizi özel ve bakımlı hissetmeniz için buradayız. Her müşterimize kişiye özel yaklaşımla, hijyenik ve konforlu bir ortamda hizmet veriyoruz.</p>
+                <p>Amacımız; doğallıktan ödün vermeden, en son teknolojiyle sizi en iyi versiyonunuzla buluşturmak.</p>
+                <ul>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Alanında uzman, deneyimli ekip</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> %100 hijyen ve sterilizasyon</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Kişiye özel bakım planı</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg> Doğal ve kalıcı sonuçlar</li>
+                </ul>
+                <a class="btn btn-gold" href="https://wa.me/90XXXXXXXXXX" target="_blank" rel="noopener">Hemen Randevu Al</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="galeri">
+        <div class="wrap">
+            <div class="sec-head">
+                <div class="eyebrow">Galeri</div>
+                <h2>Çalışmalarımızdan Kareler</h2>
+                <p>Çalışmalarımızı kavisli, 3 boyutlu bir galeride keşfedin — kaydırdıkça fotoğraflar öne gelip odaklanır. Öncesi/sonrası ve salon görselleri.</p>
+            </div>
+            <div class="flow-wrap" aria-hidden="true">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+                <img class="flow-img" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzEnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9JyNmZmQ5ZTYnLz48c3RvcCBvZmZzZXQ9Jy41JyBzdG9wLWNvbG9yPScjZTlkOWZmJy8+PHN0b3Agb2Zmc2V0PScxJyBzdG9wLWNvbG9yPScjZDlmNWYyJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48ZyBmaWxsPSdub25lJyBzdHJva2U9JyNiOThjYzknIHN0cm9rZS13aWR0aD0nMTAnIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCcgb3BhY2l0eT0nLjU1Jz48cmVjdCB4PScyMDUnIHk9JzIzNScgd2lkdGg9JzE5MCcgaGVpZ2h0PScxNDAnIHJ4PScxNicvPjxjaXJjbGUgY3g9JzMwMCcgY3k9JzMwNScgcj0nMzQnLz48cGF0aCBkPSdNMjQ3IDIzNWwxOC0zMGg3MGwxOCAzMCcvPjwvZz48dGV4dCB4PSczMDAnIHk9JzQ1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZm9udC1mYW1pbHk9J1NlZ29lIFVJLEFyaWFsJyBmb250LXNpemU9JzMwJyBmaWxsPScjOGE2ZjljJyBsZXR0ZXItc3BhY2luZz0nNic+Rk9UTzwvdGV4dD48L3N2Zz4=">
+            </div>
+            <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px">
+                <a class="btn btn-primary" href="galeri.html">✦ İmmersive Galeriyi Aç</a>
+                <a class="btn btn-ghost" href="https://instagram.com/kullanici.adi" target="_blank" rel="noopener">Instagram'da Tümünü Gör</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="yorumlar" style="background:var(--bg-soft)">
+        <div class="wrap">
+            <div class="sec-head">
+                <div class="eyebrow">Müşteri Yorumları</div>
+                <h2>Mutlu Müşterilerimiz</h2>
+                <p>* Aşağıdaki yorumlar örnektir — dilerseniz gerçek müşteri yorumlarınızla değiştiririz.</p>
+            </div>
+            <div class="quotes-marquee" id="quotes-marquee">
+                <div class="quotes-track" id="quotes-track">
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"Lazer epilasyon için gittim, hem çok ilgililer hem de sonuçtan çok memnunum. Kesinlikle tavsiye ederim!"</p>
+                        <div class="who">— Elif K.</div>
+                    </div>
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"Kaşlarımı microblading yaptırdım, tamamen doğal duruyor. Ellerine sağlık, harika bir ekip."</p>
+                        <div class="who">— Merve T.</div>
+                    </div>
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"Cilt bakımından sonra cildim adeta yenilendi. Hijyene çok dikkat ediyorlar, gönül rahatlığıyla gidebilirsiniz."</p>
+                        <div class="who">— Zeynep A.</div>
+                    </div>
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"Kalıcı makyaj yaptırdım, sabahları çok vakit kazanıyorum. Doğal ve şık bir sonuç oldu."</p>
+                        <div class="who">— Büşra Y.</div>
+                    </div>
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"Kirpik lifting sonrası bakışlarım bambaşka oldu, maskaraya gerek kalmadı. Bayıldım!"</p>
+                        <div class="who">— Selin D.</div>
+                    </div>
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"EMS uygulaması sonrası çok daha sıkı ve dinç hissediyorum. Sonuçtan çok memnunum."</p>
+                        <div class="who">— Emre Ş.</div>
+                    </div>
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"Pudralama kaş bende harika durdu, günlerdir makyajlıymışım gibi. İlgi ve temizlik on numara."</p>
+                        <div class="who">— Derya G.</div>
+                    </div>
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"Salon çok hijyenik ve huzurlu. Kendimi güvende hissettim, ekip güler yüzlü. Teşekkürler!"</p>
+                        <div class="who">— Hande M.</div>
+                    </div>
+                    <div class="quote">
+                        <div class="stars">★★★★★</div>
+                        <p>"Dudak renklendirme sonucundan çok memnunum, rengi çok doğal oturdu. Kesinlikle tekrar geleceğim."</p>
+                        <div class="who">— Ayşe N.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="iletisim">
+        <div class="wrap">
+            <div class="sec-head">
+                <div class="eyebrow">İletişim</div>
+                <h2>Bize Ulaşın</h2>
+                <p>Randevu ve sorularınız için WhatsApp'tan yazabilir ya da salonumuza uğrayabilirsiniz.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="info-card">
+                    <div class="info-row">
+                        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                        <div><b>Adres</b><span>[BÖLGE], Adnan Kahveci Blv. 194/A D:14<br>[ADRES / İL]</span></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.4 2.1L8 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg></div>
+                        <div><b>Telefon / WhatsApp</b><span><a href="tel:+90XXXXXXXXXX">[TELEFON]</a></span></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div>
+                        <div><b>Instagram</b><span><a href="https://instagram.com/kullanici.adi" target="_blank" rel="noopener">@kullanici.adi</a></span></div>
+                    </div>
+                    <div class="info-row">
+                        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+                        <div><b>Çalışma Saatleri</b><span>Her gün 10:00 – 20:00 <em>(güncellenebilir)</em></span></div>
+                    </div>
+                    <div style="margin-top:22px;display:flex;gap:.8rem;flex-wrap:wrap">
+                        <a class="btn btn-primary" href="https://wa.me/90XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp'tan Yaz</a>
+                        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=[HARITA-ADRESI]" target="_blank" rel="noopener">Yol Tarifi Al</a>
+                    </div>
+                </div>
+                <div class="map-card">
+                    <iframe title="[İŞLETME ADI] — Konum" src="https://maps.google.com/maps?hl=tr&q=Cemal+Akin+Plaza+Adnan+Kahveci+Bulvari+Sirinevler+Bahcelievler+Istanbul&t=&z=16&ie=UTF8&iwloc=B&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <a class="map-open" href="https://www.google.com/maps/search/?api=1&query=[HARITA-ADRESI]" target="_blank" rel="noopener">Yol Tarifi Al ↗</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <section style="padding-top:0">
+        <div class="wrap">
+            <div class="cta-band">
+                <h2>Güzelliğiniz için ilk adımı atın</h2>
+                <p>Randevunuzu şimdi oluşturun, uzman ekibimiz size özel bir bakım planı hazırlasın.</p>
+                <a class="btn btn-gold" href="https://wa.me/90XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp'tan Randevu Al</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="wrap">
+            <div class="foot-grid">
+                <div>
+                    <div class="brand" style="margin-bottom:14px">
+                        <svg class="crown" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                            <defs><linearGradient id="g3" x1="0" y1="0" x2="64" y2="64"><stop offset="0" stop-color="#f6d38a"/><stop offset="1" stop-color="#d4af37"/></linearGradient></defs>
+                            <path d="M8 46h48l-4 8H12l-4-8Z" fill="url(#g3)"/><path d="M6 20l12 12 14-22 14 22 12-12-6 26H12L6 20Z" fill="url(#g3)"/>
+                            <circle cx="6" cy="18" r="4" fill="url(#g3)"/><circle cx="58" cy="18" r="4" fill="url(#g3)"/><circle cx="32" cy="8" r="4.5" fill="url(#g3)"/>
+                        </svg>
+                        <span class="brand-name">[İŞLETME ADI]<small>[ALT BAŞLIK]</small></span>
+                    </div>
+                    <p style="max-width:320px">[BÖLGE]'de güzelliğin adresi. Lazer epilasyon, cilt bakımı, kalıcı makyaj ve daha fazlası.</p>
+                </div>
+                <div>
+                    <h4>Hızlı Bağlantılar</h4>
+                    <a href="#hizmetler">Hizmetler</a>
+                    <a href="#hakkimizda">Hakkımızda</a>
+                    <a href="#galeri">Galeri</a>
+                    <a href="#iletisim">İletişim</a>
+                </div>
+                <div>
+                    <h4>İletişim</h4>
+                    <a href="tel:+90XXXXXXXXXX">[TELEFON]</a>
+                    <a href="https://instagram.com/kullanici.adi" target="_blank" rel="noopener">@kullanici.adi</a>
+                    <a href="https://wa.me/90XXXXXXXXXX" target="_blank" rel="noopener">WhatsApp Randevu</a>
+                </div>
+            </div>
+            <div class="foot-bottom">
+                <span>© 2026 [İŞLETME ADI]. Tüm hakları saklıdır.</span>
+                <span>[BÖLGE] · [İLÇE / İL]</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP -->
+    <a class="fab" href="https://wa.me/90XXXXXXXXXX" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2Zm5.4 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1-.4-.1-.9-.3-1.5-.6-2.6-1.1-4.3-3.8-4.4-4-.1-.2-1-1.4-1-2.6 0-1.3.6-1.9.9-2.1.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .4l-.3.5c-.1.2-.3.3-.1.6.1.3.6 1 1.3 1.6.9.8 1.6 1 1.9 1.2.2.1.4.1.5-.1l.6-.7c.2-.2.3-.2.6-.1l1.6.8c.3.1.4.2.5.3.1.2.1.6-.1 1Z"/></svg>
+    </a>
+
+    <script>
+        // Basit mobil menü
+        document.querySelector('.burger').addEventListener('click',function(){
+            var l=document.querySelector('nav.links');
+            var open=l.style.display==='flex';
+            l.style.display=open?'none':'flex';
+            if(!open){l.style.position='absolute';l.style.top='114px';l.style.left='0';l.style.right='0';l.style.flexDirection='column';l.style.background='rgba(14,12,17,.98)';l.style.padding='18px 22px';l.style.borderBottom='1px solid var(--line)';l.style.gap='.4rem'}
+        });
+        // Menüden seçince kapat (mobil)
+        document.querySelectorAll('nav.links a').forEach(function(a){
+            a.addEventListener('click',function(){if(window.innerWidth<=640){document.querySelector('nav.links').style.display='none';}});
+        });
+    </script>
+
+    <!-- Hero canlı dalga arka planı (Breathe efektinden uyarlandı, salon renkleri) -->
+    <script>
+    (function(){
+        const cv = document.getElementById('hero-wave');
+        if(!cv) return;
+        const hero = document.getElementById('anasayfa');
+        const ctx = cv.getContext('2d');
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+        function resize(){
+            const r = hero.getBoundingClientRect();
+            W = Math.max(1, r.width); H = Math.max(1, r.height);
+            cv.width = W * DPR; cv.height = H * DPR;
+            cv.style.width = W + 'px'; cv.style.height = H + 'px';
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        }
+        window.addEventListener('resize', resize); resize();
+
+        // İmleç durumu
+        let mx = .5, my = .5, rmx = .5, rmy = .5, pmx = .5, pmy = .5, mvx = 0, mvy = 0;
+        let dragEnergy = 0, clickImpulse = 0, dragging = false;
+        let ripples = [];
+        function pointer(clientX, clientY){
+            const r = cv.getBoundingClientRect();
+            pmx = mx; pmy = my;
+            mx = Math.min(1, Math.max(0, (clientX - r.left) / (r.width||1)));
+            my = Math.min(1, Math.max(0, (clientY - r.top) / (r.height||1)));
+            mvx = (mx - pmx) * 60; mvy = (my - pmy) * 60;
+            if(dragging){
+                dragEnergy = Math.min(dragEnergy + Math.hypot(mvx, mvy) * 0.04, 1.5);
+                if(Math.random() < 0.08){ ripples.push({x:mx,y:my,t:0,s:0.4+dragEnergy*0.3}); if(ripples.length>8) ripples.shift(); }
+            }
+        }
+        window.addEventListener('mousemove', e => pointer(e.clientX, e.clientY), {passive:true});
+        window.addEventListener('mousedown', e => { dragging = true; clickImpulse = 1; const r = cv.getBoundingClientRect(); ripples.push({x:(e.clientX-r.left)/(r.width||1), y:(e.clientY-r.top)/(r.height||1), t:0, s:1}); if(ripples.length>6) ripples.shift(); }, {passive:true});
+        window.addEventListener('mouseup', () => dragging = false);
+        window.addEventListener('touchmove', e => { const t = e.touches[0]; if(t) pointer(t.clientX, t.clientY); }, {passive:true});
+
+        // Sadece görünürken çiz (performans)
+        let visible = true;
+        if('IntersectionObserver' in window){
+            new IntersectionObserver(es => { visible = es[0].isIntersecting; }, {threshold:0}).observe(hero);
+        }
+
+        // Dalga dolgu katmanları (salon renk ailesi: turuncu → pembe → mor)
+        // [yüzde-y, genlik, frekans, hız, ton(hue), doygunluk, açıklık, opaklık]
+        const FILLS = [
+            [0.86, 120, 0.78, 0.000082, 335, 90, 84, 0.60],
+            [0.80,  98, 1.02, 0.000115,  22, 95, 85, 0.46],
+            [0.74,  78, 1.28, 0.000152, 285, 78, 88, 0.42],
+            [0.68,  62, 1.58, 0.000192, 180, 68, 84, 0.40],
+            [0.62,  48, 1.98, 0.000238, 320, 85, 90, 0.30],
+            [0.57,  38, 2.48, 0.000285, 265, 72, 90, 0.24],
+            [0.52,  27, 3.20, 0.000338, 190, 62, 90, 0.18]
+        ];
+        // İmlece güçlü tepki veren ince çizgiler
+        const LINES = [
+            [0.66, 0.060, 1.28, 0.000048, 0.20, 1.0],
+            [0.56, 0.040, 2.00, 0.000065, 0.15, 0.7],
+            [0.73, 0.046, 0.98, 0.000036, 0.13, 0.6],
+            [0.49, 0.026, 2.70, 0.000082, 0.11, 0.5],
+            [0.61, 0.066, 0.80, 0.000033, 0.16, 0.9]
+        ];
+
+        let bs = 0, last = 0;
+        function frame(ts){
+            requestAnimationFrame(frame);
+            if(!visible || W < 2){ return; }
+            const dt = Math.min(ts - last, 50); last = ts;
+            // yumuşatma + sönümleme
+            rmx += (mx - rmx) * 0.05; rmy += (my - rmy) * 0.05;
+            mvx *= 0.88; mvy *= 0.88;
+            clickImpulse *= 0.94; dragEnergy *= 0.97;
+            for(let i = ripples.length-1; i>=0; i--){ ripples[i].t += 0.016; if(ripples[i].t > 2.5) ripples.splice(i,1); }
+            // yavaş nefes gibi salınım
+            bs = reduce ? 0.25 : (0.5 + 0.5 * Math.sin(ts * 0.00068)) * 0.34;
+            const t = ts;
+
+            ctx.clearRect(0, 0, W, H);
+            // aydınlık şeker-beyazı zemin
+            ctx.fillStyle = '#fff6fa'; ctx.fillRect(0, 0, W, H);
+            // merkez ferah parıltı (pembe + cam göbeği)
+            let g = ctx.createRadialGradient(W/2, H*0.62, 0, W/2, H*0.62, W*0.72);
+            g.addColorStop(0, 'rgba(255,120,175,'+(0.07 + bs*0.10)+')');
+            g.addColorStop(0.42, 'rgba(60,205,200,'+(0.05 + bs*0.07)+')');
+            g.addColorStop(1, 'transparent');
+            ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+            // imleci takip eden parıltı
+            const gx = W * (rmx + mvx*0.02), gy = H * (rmy + mvy*0.02);
+            let g2 = ctx.createRadialGradient(gx, gy, 0, gx, gy, W*(0.42 + dragEnergy*0.18));
+            g2.addColorStop(0, 'rgba(255,92,157,'+(0.06 + bs*0.10 + dragEnergy*0.08)+')');
+            g2.addColorStop(1, 'transparent');
+            ctx.fillStyle = g2; ctx.fillRect(0, 0, W, H);
+
+            // dolgu dalgaları
+            FILLS.forEach(function(L, i){
+                const yc=L[0], amp=L[1]*(0.62+0.38*bs), fm=L[2], sp=L[3], hue=L[4], sat=L[5], lit=L[6], op=L[7];
+                const yB = H*yc + H*(rmy-0.5)*0.04;
+                ctx.beginPath();
+                for(let x=0; x<=W; x+=5){
+                    const nx = x/W, ph = t*sp;
+                    const mouseWarp = (rmx-0.5)*amp*0.5*Math.sin(nx*Math.PI*2 + 0.5);
+                    const dragWarp = dragEnergy*amp*0.3*Math.sin(nx*Math.PI*3 + t*0.003);
+                    let rip = 0;
+                    for(const r of ripples){ const dx=nx-r.x, wf=r.t*0.6, sp2=0.12+r.t*0.2; rip += r.s*amp*0.22*Math.exp(-Math.pow(Math.abs(dx)-wf,2)/(sp2*sp2))*Math.exp(-r.t*0.9)*Math.sin((Math.abs(dx)-wf)*18); }
+                    let y = yB + mouseWarp + dragWarp + rip
+                        + Math.sin(nx*Math.PI*2*fm + ph*7)*amp
+                        + Math.sin(nx*Math.PI*3*fm*0.73 + ph*5.2 + i)*amp*0.4;
+                    x===0 ? ctx.moveTo(0,y) : ctx.lineTo(x,y);
+                }
+                ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath();
+                ctx.fillStyle = 'hsla('+hue+','+sat+'%,'+(lit - bs*8)+'%,'+(op + bs*0.08)+')';
+                ctx.fill();
+            });
+
+            // imlece tepki veren ince çizgiler
+            const mxB = rmx-0.5, myB = rmy-0.5;
+            LINES.forEach(function(L, li){
+                const yc=L[0], a=L[1], fm=L[2], sp=L[3], op=L[4], w=L[5];
+                const yB = H*yc + myB*H*0.18*(1-li*0.08);
+                const ampBoost = 1 + Math.abs(mxB)*1.8 + dragEnergy*1.2 + Math.abs(myB)*0.6;
+                const amp = H*a*(0.52+0.48*bs)*ampBoost;
+                const fmMod = fm*(1 + mxB*0.5 + mvx*0.04), ph = t*sp;
+                ctx.beginPath();
+                for(let x=0; x<=W; x+=5){
+                    const nx=x/W;
+                    let y = yB
+                        + Math.sin(nx*Math.PI*2*fmMod + ph*6 + mxB*nx*3)*amp
+                        + Math.sin(nx*Math.PI*4*fmMod*0.6 + ph*3.8 + myB*2)*amp*0.35
+                        + mxB*amp*0.5*Math.sin(nx*Math.PI*1.5 + li)
+                        + mvx*amp*0.06*Math.sin(nx*Math.PI*2.5 + ph*2);
+                    for(const r of ripples){ const dx=nx-r.x, wf=r.t*0.55, sp2=0.1+r.t*0.15; y += r.s*amp*0.28*Math.exp(-Math.pow(Math.abs(dx)-wf,2)/(sp2*sp2))*Math.exp(-r.t)*Math.sin((Math.abs(dx)-wf)*20); }
+                    x===0 ? ctx.moveTo(0,y) : ctx.lineTo(x,y);
+                }
+                const prox = Math.exp(-Math.abs(rmy-yc)*3)*0.4;
+                ctx.strokeStyle = 'rgba(150,72,120,'+((op+prox)*(0.34+0.42*bs))+')';
+                ctx.lineWidth = w*(1 + prox*1.5);
+                ctx.stroke();
+            });
+        }
+        requestAnimationFrame(frame);
+    })();
+    </script>
+    <!-- Kayan yorum şeridi -->
+    <script>
+    (function(){
+        const vp=document.getElementById('quotes-marquee');
+        const track=document.getElementById('quotes-track');
+        if(!vp||!track) return;
+        const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        track.innerHTML+=track.innerHTML;
+        let half=0, offset=0, vX=0, dragging=false, lastX=0, paused=false, resumeT=null;
+        const SPEED=0.4;
+        function measure(){ half=track.scrollWidth/2; }
+        measure(); window.addEventListener('resize', measure);
+        vp.addEventListener('pointerdown', e=>{ dragging=true; paused=true; lastX=e.clientX; vX=0; vp.classList.add('grabbing'); if(resumeT) clearTimeout(resumeT); try{ vp.setPointerCapture(e.pointerId); }catch(_){} });
+        vp.addEventListener('pointermove', e=>{ if(!dragging) return; const dx=e.clientX-lastX; lastX=e.clientX; offset+=dx; vX=dx; });
+        function endDrag(){ if(!dragging) return; dragging=false; vp.classList.remove('grabbing'); resumeT=setTimeout(()=>{ paused=false; }, 250); }
+        vp.addEventListener('pointerup', endDrag); vp.addEventListener('pointercancel', endDrag);
+        function frame(){ requestAnimationFrame(frame); if(half<1){ measure(); return; }
+            if(!dragging){ if(vX){ offset+=vX; vX*=0.9; if(Math.abs(vX)<0.1) vX=0; } if(!paused && !reduce) offset-=SPEED; }
+            if(offset<=-half) offset+=half; if(offset>0) offset-=half;
+            track.style.transform='translate3d('+offset+'px,0,0)'; }
+        requestAnimationFrame(frame);
+    })();
+    </script>
+</body>
+</html>
